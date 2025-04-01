@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot com LangChain</title>
+    <script>
+        async function sendQuestion() {
+            const question = document.getElementById("question").value;
+            const responseDiv = document.getElementById("response");
+            
+            const response = await fetch("/ask/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: 1, question })
+            });
+            
+            const data = await response.json();
+            responseDiv.innerHTML = `<p><strong>Pergunta:</strong> ${data.question}</p>
+                                     <p><strong>Resposta:</strong> ${data.answer}</p>`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Chatbot com LangChain</h1>
+    <label for="question">Digite sua pergunta:</label>
+    <input type="text" id="question" />
+    <button onclick="sendQuestion()">Enviar</button>
+    <div id="response"></div>
+</body>
+</html>
